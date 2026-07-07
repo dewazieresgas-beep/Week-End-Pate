@@ -1,0 +1,7 @@
+# Fichiers système
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Sauvegardes exportées depuis le site
+pate-gibier-*.json

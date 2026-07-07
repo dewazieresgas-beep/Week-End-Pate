@@ -1,0 +1,242 @@
+/* ================================================================
+   Journée Pâtés de Gibier — feuille de style
+   Thème : forêt / gibier — rustique mais moderne
+   ================================================================ */
+
+:root{
+  --green:#2f4a34;      /* vert forêt profond */
+  --green-2:#3c5d43;
+  --green-soft:#e8efe6;
+  --amber:#b5651d;      /* terracotta / cuivre */
+  --amber-2:#cf7a2c;
+  --cream:#f7f3ea;      /* fond parchemin */
+  --card:#ffffff;
+  --ink:#26241f;        /* texte principal */
+  --ink-soft:#6b6455;
+  --line:#e2dccd;
+  --danger:#a23b2d;
+  --ok:#3c7a4e;
+  --warn:#c98a1a;
+  --blue:#2f6d9e;       /* rappel : bleu = à remplir */
+  --shadow:0 2px 8px rgba(40,35,20,.08), 0 8px 30px rgba(40,35,20,.06);
+  --radius:14px;
+  --nav-w:250px;
+  --topbar-h:58px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);
+  background:var(--cream);
+  line-height:1.45;
+  -webkit-text-size-adjust:100%;
+}
+h1,h2,h3,h4{font-family:Georgia,"Times New Roman",serif;color:var(--green);margin:0 0 .4em}
+h1{font-size:1.55rem}
+h2{font-size:1.25rem}
+h3{font-size:1.05rem}
+a{color:var(--amber)}
+[hidden]{display:none !important}
+
+/* ---------------- Boutons ---------------- */
+.btn{
+  font:inherit;font-weight:600;cursor:pointer;border:none;border-radius:10px;
+  padding:.6rem 1rem;display:inline-flex;align-items:center;gap:.4rem;
+  transition:.15s transform,.15s box-shadow,.15s background;line-height:1.1;
+}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-2)}
+.btn-outline{background:transparent;color:var(--green);border:2px solid var(--green)}
+.btn-outline:hover{background:var(--green-soft)}
+.btn-amber{background:var(--amber);color:#fff}
+.btn-amber:hover{background:var(--amber-2)}
+.btn-ghost{background:transparent;color:var(--ink-soft)}
+.btn-ghost:hover{background:#0000000d}
+.btn-danger{background:transparent;color:var(--danger);border:1px solid var(--danger)}
+.btn-danger:hover{background:#a23b2d12}
+.btn-sm{padding:.35rem .6rem;font-size:.85rem;border-radius:8px}
+.btn-block{width:100%;justify-content:center;margin:.4rem 0}
+.btn-note{font-weight:400;opacity:.8;font-size:.85em}
+.linkbtn{background:none;border:none;color:var(--amber);cursor:pointer;font:inherit;padding:0;text-decoration:underline}
+.iconbtn{background:none;border:1px solid var(--line);border-radius:8px;cursor:pointer;padding:.25rem .5rem;color:var(--ink-soft)}
+.iconbtn:hover{background:#0000000a;color:var(--ink)}
+
+/* ---------------- Écran de connexion ---------------- */
+.login-screen{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:1.2rem;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #3c5d4322, transparent),
+    linear-gradient(160deg,#31492f,#26241f);
+}
+.login-card{
+  background:var(--card);border-radius:20px;box-shadow:var(--shadow);
+  width:100%;max-width:430px;padding:2rem 1.6rem;text-align:center;
+}
+.login-brand{font-size:3rem;line-height:1}
+.login-card h1{margin:.3rem 0 .1rem;font-size:1.5rem}
+.login-sub{color:var(--ink-soft);margin:.1rem 0 1.3rem}
+.login-form{text-align:left;margin-top:.5rem}
+.login-form label{font-weight:600;display:block;margin:.3rem 0 .3rem}
+.login-form input,.login-form select{
+  width:100%;padding:.7rem;border:1px solid var(--line);border-radius:10px;font:inherit;background:#fff
+}
+.login-hint{font-size:.82rem;color:var(--ink-soft);margin:.6rem 0}
+.login-actions{display:flex;justify-content:space-between;gap:.5rem;margin-top:1rem}
+.login-err{color:var(--danger);font-weight:600;margin:.6rem 0 0}
+.login-mode{color:#ffffffcc;margin-top:1rem;font-size:.85rem;text-align:center;max-width:430px}
+
+/* ---------------- Barre du haut ---------------- */
+.topbar{
+  position:sticky;top:0;z-index:40;height:var(--topbar-h);
+  background:var(--green);color:#fff;display:flex;align-items:center;gap:.6rem;
+  padding:0 .8rem;box-shadow:0 2px 10px #0003;
+}
+.burger{display:none;background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;padding:.2rem .4rem}
+.brand{display:flex;align-items:center;gap:.5rem;cursor:pointer;font-weight:700}
+.brand-emoji{font-size:1.3rem}
+.brand-text em{font-style:normal;opacity:.7;font-weight:500}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:.6rem}
+.who{font-size:.85rem;background:#ffffff22;padding:.25rem .6rem;border-radius:20px;white-space:nowrap}
+.topbar .btn-ghost{color:#fff}
+.topbar .btn-ghost:hover{background:#ffffff1f}
+
+/* ---------------- Navigation latérale ---------------- */
+.sidenav{
+  position:fixed;top:var(--topbar-h);left:0;width:var(--nav-w);
+  height:calc(100vh - var(--topbar-h));background:var(--card);border-right:1px solid var(--line);
+  padding:.8rem;overflow-y:auto;z-index:30;
+}
+.sidenav a{
+  display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--ink);
+  padding:.6rem .7rem;border-radius:10px;font-weight:600;margin-bottom:.15rem;
+}
+.sidenav a .ico{width:1.4rem;text-align:center}
+.sidenav a:hover{background:var(--green-soft)}
+.sidenav a.active{background:var(--green);color:#fff}
+.nav-group{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);margin:1rem .6rem .3rem;font-weight:700}
+.scrim{display:none;position:fixed;inset:var(--topbar-h) 0 0 0;background:#0006;z-index:25}
+
+/* ---------------- Contenu ---------------- */
+.content{margin-left:var(--nav-w);padding:1.4rem 1.6rem 3rem;max-width:1200px}
+.foot{
+  margin-left:var(--nav-w);padding:1rem 1.6rem;color:var(--ink-soft);font-size:.85rem;
+  border-top:1px solid var(--line);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap
+}
+.foot-sep{opacity:.5}
+
+/* ---------------- En-tête de page ---------------- */
+.page-head{display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.page-head .ph-text{flex:1;min-width:200px}
+.page-head p{margin:.2rem 0 0;color:var(--ink-soft)}
+.page-head .ph-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+
+/* ---------------- Cartes / grilles ---------------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.1rem;margin-bottom:1.1rem}
+.card h2{margin-top:0}
+.grid{display:grid;gap:1rem}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:1.2rem}
+.kpi{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--amber);border-radius:var(--radius);padding:1rem 1.1rem;box-shadow:var(--shadow)}
+.kpi .k-val{font-size:1.7rem;font-weight:800;color:var(--green);font-family:Georgia,serif;line-height:1.1}
+.kpi .k-lab{color:var(--ink-soft);font-size:.85rem;margin-top:.2rem}
+.kpi.green{border-left-color:var(--green)}
+.kpi.blue{border-left-color:var(--blue)}
+
+/* ---------------- Tableaux ---------------- */
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;min-width:520px;background:var(--card);font-size:.92rem}
+th,td{padding:.55rem .65rem;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+thead th{background:var(--green);color:#fff;position:sticky;top:0;font-weight:600}
+tbody tr:hover{background:#faf7ef}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.total-row td{font-weight:800;background:#f0ece0;border-top:2px solid var(--green)}
+tr.total-row:hover td{background:#f0ece0}
+.mini-input{width:74px;padding:.35rem;border:1px solid var(--blue);border-radius:7px;font:inherit;text-align:right;background:#f4f9fd}
+.mini-input:focus{outline:2px solid var(--blue);background:#fff}
+.txt-input{width:100%;min-width:120px;padding:.4rem;border:1px solid var(--line);border-radius:7px;font:inherit}
+td.editable{background:#f4f9fd}
+.subhead td{background:#efeadd;font-weight:700;color:var(--green)}
+
+/* Badges / puces */
+.badge{display:inline-block;padding:.15rem .55rem;border-radius:20px;font-size:.78rem;font-weight:700}
+.badge-gibier{background:#e7efe6;color:var(--green)}
+.badge-achat{background:#f6e9da;color:var(--amber)}
+.badge-todo{background:#f7ecd0;color:#8a6a12}
+.badge-done{background:#dcefe0;color:var(--ok)}
+.legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.83rem;color:var(--ink-soft);margin:.2rem 0 1rem}
+.legend span{display:inline-flex;align-items:center;gap:.35rem}
+.dot{width:.8rem;height:.8rem;border-radius:50%;display:inline-block}
+.dot-blue{background:var(--blue)}.dot-green{background:var(--green)}.dot-black{background:#333}
+
+/* Formulaires génériques */
+.field{margin-bottom:.9rem}
+.field label{font-weight:600;display:block;margin-bottom:.3rem}
+.field input,.field select,.field textarea{width:100%;padding:.6rem;border:1px solid var(--line);border-radius:9px;font:inherit;background:#fff}
+.field .hint{font-size:.8rem;color:var(--ink-soft);margin-top:.25rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.inline-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem}
+
+.callout{background:var(--green-soft);border-left:4px solid var(--green);border-radius:10px;padding:.8rem 1rem;margin:.6rem 0;font-size:.92rem}
+.callout.warn{background:#fbf1da;border-left-color:var(--warn)}
+.callout.blue{background:#eaf3fa;border-left-color:var(--blue)}
+.muted{color:var(--ink-soft)}
+.right{text-align:right}
+.center{text-align:center}
+.pill-row{display:flex;gap:.4rem;flex-wrap:wrap;margin:.5rem 0}
+
+/* Galerie années */
+.year-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.1rem}
+.year-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.year-card .yc-cover{aspect-ratio:16/10;background:#e9e3d4 center/cover;position:relative;display:flex;align-items:center;justify-content:center;color:#b3a986;font-size:2.4rem}
+.year-card .yc-body{padding:.9rem 1rem}
+.year-card h3{margin:.1rem 0 .3rem}
+.photo-strip{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem}
+.photo-strip img{width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--line);cursor:pointer}
+.gallery-big{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.6rem;margin-top:.6rem}
+.gallery-big figure{margin:0;position:relative}
+.gallery-big img{width:100%;height:130px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.gallery-big .rm{position:absolute;top:4px;right:4px;background:#000a;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer}
+
+/* Modale */
+.modal{position:fixed;inset:0;background:#0007;z-index:60;display:flex;align-items:center;justify-content:center;padding:1rem}
+.modal-box{background:var(--card);border-radius:16px;max-width:560px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 20px 60px #0005}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card)}
+.modal-head h3{margin:0}
+.modal-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--ink-soft)}
+.modal-body{padding:1.2rem}
+
+/* Toasts */
+.toasts{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:80;display:flex;flex-direction:column;gap:.5rem;align-items:center;width:calc(100% - 2rem);max-width:440px}
+.toast{background:var(--ink);color:#fff;padding:.7rem 1rem;border-radius:10px;box-shadow:var(--shadow);font-weight:600;animation:pop .2s ease}
+.toast.ok{background:var(--ok)}.toast.err{background:var(--danger)}.toast.info{background:var(--green)}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+
+/* Cases à cocher gibier (recettes) */
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.35rem .8rem;margin:.4rem 0 .2rem}
+.pill-check{display:flex;align-items:center;gap:.45rem;font-size:.92rem;padding:.3rem .4rem;border-radius:8px;cursor:pointer}
+.pill-check:hover{background:var(--green-soft)}
+.pill-check input{width:1.05rem;height:1.05rem}
+.badge-cell{white-space:nowrap}
+hr{border:none;border-top:1px solid var(--line)}
+
+/* Aide contextuelle */
+.help{display:inline-flex;align-items:center;justify-content:center;width:1.05rem;height:1.05rem;border-radius:50%;background:#e0d9c7;color:var(--ink-soft);font-size:.72rem;font-weight:700;cursor:help;margin-left:.3rem}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width:860px){
+  .burger{display:block}
+  .sidenav{transform:translateX(-100%);transition:transform .22s ease;box-shadow:6px 0 24px #0003}
+  .sidenav.open{transform:translateX(0)}
+  .scrim.show{display:block}
+  .content,.foot{margin-left:0}
+  .form-row{grid-template-columns:1fr}
+  .who{display:none}
+}
+@media (max-width:520px){
+  .content{padding:1rem .8rem 3rem}
+  h1{font-size:1.3rem}
+  .kpi .k-val{font-size:1.4rem}
+}
