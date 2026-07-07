@@ -16,6 +16,12 @@ App.ui = (function () {
     if (v === '' || v === null || v === undefined || isNaN(v)) return '—';
     return Number(v).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
   }
+  function toNumber(value) {
+    if (typeof value === 'number') return value;
+    const normalized = String(value == null ? '' : value).trim().replace(/\s/g, '').replace(',', '.');
+    const n = parseFloat(normalized);
+    return isNaN(n) ? NaN : n;
+  }
   /* nombre « intelligent » : entier si entier, sinon 2 déc. (pour doses/qtés) */
   function q(v) {
     const n = Number(v) || 0;
@@ -40,14 +46,20 @@ App.ui = (function () {
   }
 
   /* ---- Modale ---- */
-  function modal(title, bodyHTML, onOpen) {
+  function modal(title, bodyHTML, onOpen, opts) {
     const m = document.getElementById('modal');
+    const box = m.querySelector('.modal-box');
+    box.classList.toggle('modal-wide', !!(opts && opts.wide));
     document.getElementById('modalTitle').textContent = title;
     document.getElementById('modalBody').innerHTML = bodyHTML;
     m.hidden = false;
     if (onOpen) onOpen(document.getElementById('modalBody'));
   }
-  function closeModal() { document.getElementById('modal').hidden = true; }
+  function closeModal() {
+    const m = document.getElementById('modal');
+    m.hidden = true;
+    m.querySelector('.modal-box').classList.remove('modal-wide');
+  }
 
   /* Confirmation simple → renvoie une promesse */
   function confirmBox(message, okLabel) {
@@ -83,5 +95,5 @@ App.ui = (function () {
     <span><i class="dot dot-black"></i> calcul automatique</span>
   </div>`;
 
-  return { num, kg, eur, q, esc, toast, modal, closeModal, confirmBox, h, pageHead, legend };
+  return { num, kg, eur, q, toNumber, esc, toast, modal, closeModal, confirmBox, h, pageHead, legend };
 })();

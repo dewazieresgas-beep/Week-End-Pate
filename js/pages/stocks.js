@@ -49,7 +49,7 @@ App.pages.stocks = function (view) {
 
   view.querySelectorAll('input[data-g]').forEach(inp => inp.oninput = () => {
     const gid = inp.dataset.g, pid = inp.dataset.p;
-    const v = parseFloat(inp.value);
+    const v = ui.toNumber(inp.value);
     if (!db.stocks[gid]) db.stocks[gid] = {};
     if (isNaN(v) || v === 0) delete db.stocks[gid][pid];
     else db.stocks[gid][pid] = v;

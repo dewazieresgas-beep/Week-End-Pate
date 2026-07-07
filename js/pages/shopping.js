@@ -9,9 +9,14 @@ App.pages.shopping = function (view) {
   const db = App.store.get();
   const ui = App.ui;
   const prod = App.calc.production(db);
+  const showAll = !!view._showAllShopping;
 
   // On n'achète que les ingrédients "Achat" (le gibier vient des chasseurs)
-  const achats = prod.rows.filter(row => row.ing.cat === 'Achat');
+  const achatsAll = prod.rows.filter(row => row.ing.cat === 'Achat');
+  const achats = showAll ? achatsAll : achatsAll.filter(row => {
+    const c = db.courses[row.ing.id] || {};
+    return row.total > 0 || Number(c.enStock) > 0 || c.qui || c.statut;
+  });
 
   const statuts = ['À faire', 'En cours', 'Acheté'];
 
@@ -47,14 +52,15 @@ App.pages.shopping = function (view) {
   }).join('');
 
   view.innerHTML = `
-    ${ui.pageHead('🛒 Liste de courses', 'Le besoin vient de la production. Indique le stock et qui s\'en occupe — le reste se calcule.')}
+    ${ui.pageHead('🛒 Liste de courses', 'Le besoin vient de la production. Indique le stock et qui s\'en occupe — le reste se calcule.',
+      `<button class="btn btn-outline btn-sm" id="toggleAll">${showAll ? 'Masquer les lignes à zéro' : 'Voir tous les achats'}</button>`)}
     ${ui.legend}
     <div class="card">
       <h2>Ingrédients à acheter</h2>
       <div class="tablewrap">
         <table>
           <thead><tr><th>Ingrédient</th><th>Unité</th><th class="num">Besoin</th><th class="num">En stock</th><th class="num">À acheter</th><th class="num">Prix</th><th class="num">Coût</th><th>Qui ?</th><th>Statut</th></tr></thead>
-          <tbody>${rows}</tbody>
+          <tbody>${rows || `<tr><td colspan="9" class="muted center">Aucun achat calculé pour l’instant.</td></tr>`}</tbody>
           <tfoot><tr class="total-row"><td colspan="6">TOTAL ACHATS</td><td class="num" id="totCourses">—</td><td colspan="2"></td></tr></tfoot>
         </table>
       </div>
@@ -71,9 +77,11 @@ App.pages.shopping = function (view) {
     </div>
   `;
 
+  view.querySelector('#toggleAll').onclick = () => { view._showAllShopping = !view._showAllShopping; App.pages.shopping(view); };
+
   // Handlers ingrédients
   view.querySelectorAll('input[data-stock]').forEach(inp => inp.oninput = () => {
-    setCourse(inp.dataset.stock, 'enStock', parseFloat(inp.value));
+    setCourse(inp.dataset.stock, 'enStock', ui.toNumber(inp.value));
     recomputeCourses();
   });
   view.querySelectorAll('input[data-qui]').forEach(inp => inp.oninput = () => setCourse(inp.dataset.qui, 'qui', inp.value));
@@ -81,7 +89,7 @@ App.pages.shopping = function (view) {
 
   // Handlers bocaux
   view.querySelectorAll('input[data-bstock]').forEach(inp => inp.oninput = () => {
-    const fid = inp.dataset.bstock; const v = parseInt(inp.value, 10);
+    const fid = inp.dataset.bstock; const v = Math.round(ui.toNumber(inp.value));
     if (!db.bocauxStock) db.bocauxStock = {};
     if (isNaN(v)) delete db.bocauxStock[fid]; else db.bocauxStock[fid] = v;
     App.store.save();

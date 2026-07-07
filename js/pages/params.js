@@ -44,8 +44,8 @@ App.pages.params = function (view) {
     </div>`;
     const bind = (id, fn) => { const el = view.querySelector(id); el.onchange = () => { fn(el.value); App.store.save(); ui.toast('Enregistré.', 'ok', 1200); }; };
     bind('#g_lieu', v => db.params.lieu = v);
-    bind('#g_annee', v => { db.params.annee = parseInt(v, 10) || db.params.annee; document.getElementById('brandYear').textContent = db.params.annee; });
-    bind('#g_nb', v => db.params.nbParticipants = parseInt(v, 10) || 0);
+    bind('#g_annee', v => { db.params.annee = Math.round(ui.toNumber(v)) || db.params.annee; document.getElementById('brandYear').textContent = db.params.annee; });
+    bind('#g_nb', v => db.params.nbParticipants = Math.round(ui.toNumber(v)) || 0);
     bind('#g_fmt', v => db.formatSuggere = v);
     bind('#g_pass', v => db.params.adminPass = v || 'pate');
   }
@@ -99,7 +99,7 @@ App.pages.params = function (view) {
     view.querySelectorAll('tr[data-g]').forEach(tr => {
       const g = db.gibier.find(x => x.id === tr.dataset.g);
       tr.querySelector('[data-f="nom"]').oninput = (e) => { g.nom = e.target.value; App.store.save(); };
-      tr.querySelector('[data-f="rendement"]').oninput = (e) => { g.rendement = parseFloat(e.target.value) || 0; App.store.save(); };
+      tr.querySelector('[data-f="rendement"]').oninput = (e) => { g.rendement = ui.toNumber(e.target.value) || 0; App.store.save(); };
     });
     view.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => {
       const g = db.gibier.find(x => x.id === b.dataset.del);
@@ -136,7 +136,7 @@ App.pages.params = function (view) {
       const ing = db.ingredients.find(x => x.id === tr.dataset.i);
       tr.querySelector('[data-f="nom"]').oninput = (e) => { ing.nom = e.target.value; App.store.save(); };
       tr.querySelector('[data-f="unite"]').oninput = (e) => { ing.unite = e.target.value; App.store.save(); };
-      tr.querySelector('[data-f="prix"]').oninput = (e) => { ing.prix = parseFloat(e.target.value) || 0; App.store.save(); };
+      tr.querySelector('[data-f="prix"]').oninput = (e) => { ing.prix = ui.toNumber(e.target.value) || 0; App.store.save(); };
       tr.querySelector('[data-f="cat"]').onchange = (e) => { ing.cat = e.target.value; App.store.save(); };
     });
     view.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => {
@@ -170,8 +170,8 @@ App.pages.params = function (view) {
     </div>`;
     view.querySelectorAll('tr[data-f]').forEach(tr => {
       const f = db.formats.find(x => x.id === tr.dataset.f);
-      tr.querySelector('[data-f="nominalG"]').oninput = (e) => { f.nominalG = parseInt(e.target.value, 10) || 0; App.store.save(); };
-      tr.querySelector('[data-f="reelG"]').oninput = (e) => { f.reelG = parseInt(e.target.value, 10) || 0; App.store.save(); };
+      tr.querySelector('[data-f="nominalG"]').oninput = (e) => { f.nominalG = Math.round(ui.toNumber(e.target.value)) || 0; App.store.save(); };
+      tr.querySelector('[data-f="reelG"]').oninput = (e) => { f.reelG = Math.round(ui.toNumber(e.target.value)) || 0; App.store.save(); };
     });
     view.querySelectorAll('[data-sugg]').forEach(r => r.onchange = () => { db.formatSuggere = r.dataset.sugg; App.store.save(); });
     view.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => {

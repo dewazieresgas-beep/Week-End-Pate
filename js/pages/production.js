@@ -11,15 +11,16 @@ App.pages.production = function (view) {
   const ui = App.ui;
   const prod = App.calc.production(db);
   const recettes = db.recettes;
+  const showDetail = !!view._showProdDetail;
 
   // ---- viande de base par pâté ----
   const baseCards = recettes.map(r => `
     <div class="kpi"><div class="k-val" style="font-size:1.2rem">${ui.num(prod.base[r.key], 2)} kg</div>
       <div class="k-lab">${ui.esc(r.nom)}</div></div>`).join('');
 
-  // ---- quantités d'ingrédients par pâté ----
+  // ---- quantités d'ingrédients ----
   const thRec = recettes.map(r => `<th class="num" title="${ui.esc(r.nom)}">${ui.esc(shortName(r.nom))}</th>`).join('');
-  const qtyRows = prod.rows.map(row => {
+  const detailRows = prod.rows.map(row => {
     if (row.total === 0) return ''; // n'affiche que les ingrédients réellement utilisés
     const cells = recettes.map(r => {
       const v = row.perRecipe[r.key];
@@ -28,7 +29,23 @@ App.pages.production = function (view) {
     return `<tr><td>${ui.esc(row.ing.nom)}</td><td class="muted">${ui.esc(row.ing.unite)}</td>${cells}<td class="num"><strong>${ui.q(row.total)}</strong></td></tr>`;
   }).join('');
 
+  const totalQtyRows = prod.rows.map(row => {
+    if (row.total === 0) return '';
+    const usedIn = recettes
+      .filter(r => row.perRecipe[r.key] > 0)
+      .map(r => `<span class="badge badge-soft">${ui.esc(shortName(r.nom))}</span>`)
+      .join(' ');
+    return `<tr>
+      <td>${ui.esc(row.ing.nom)}</td>
+      <td class="muted">${ui.esc(row.ing.unite)}</td>
+      <td class="num"><strong>${ui.q(row.total)}</strong></td>
+      <td>${usedIn || '—'}</td>
+      <td class="num">${row.cost ? ui.eur(row.cost) : '—'}</td>
+    </tr>`;
+  }).join('');
+
   const weightCells = recettes.map(r => `<td class="num">${ui.num(prod.weight[r.key], 2)}</td>`).join('');
+  const emptyRecipes = recettes.filter(r => (prod.base[r.key] || 0) === 0 && (prod.weight[r.key] || 0) === 0);
 
   // ---- répartition en bocaux ----
   const fmts = db.formats;
@@ -51,6 +68,7 @@ App.pages.production = function (view) {
   view.innerHTML = `
     ${ui.pageHead('🥫 Production & bocaux', 'Calcul automatique depuis les recettes. Saisis seulement le nombre de bocaux par format.')}
     ${ui.legend}
+    ${emptyRecipes.length ? `<div class="callout warn">Recettes sans quantité calculée : ${emptyRecipes.map(r => ui.esc(r.nom)).join(', ')}. Vérifie les stocks ou la viande de base dans <button class="linkbtn" data-go-recipes>Recettes</button>.</div>` : ''}
 
     <div class="card">
       <h2>Viande de base par pâté (kg net)</h2>
@@ -58,14 +76,27 @@ App.pages.production = function (view) {
     </div>
 
     <div class="card">
-      <h2>Quantités d'ingrédients calculées</h2>
+      <div class="section-head">
+        <div>
+          <h2>Quantités d'ingrédients calculées</h2>
+          <p class="muted">Lecture simple : total à préparer ou à acheter, toutes recettes confondues.</p>
+        </div>
+        <button class="btn btn-outline btn-sm" id="toggleDetail">${showDetail ? 'Masquer le détail' : 'Détail par pâté'}</button>
+      </div>
       <div class="tablewrap">
         <table>
-          <thead><tr><th>Ingrédient</th><th>Unité</th>${thRec}<th class="num">Total</th></tr></thead>
-          <tbody>${qtyRows || `<tr><td colspan="${recettes.length + 3}" class="muted center">Aucune quantité (saisis d'abord les stocks gibier).</td></tr>`}</tbody>
-          <tfoot><tr class="total-row"><td>POIDS TOTAL (kg)</td><td></td>${weightCells}<td class="num">${ui.num(prod.totalWeight, 2)}</td></tr></tfoot>
+          <thead><tr><th>Ingrédient</th><th>Unité</th><th class="num">Total</th><th>Utilisé dans</th><th class="num">Coût estimé</th></tr></thead>
+          <tbody>${totalQtyRows || `<tr><td colspan="5" class="muted center">Aucune quantité (saisis d'abord les stocks gibier).</td></tr>`}</tbody>
+          <tfoot><tr class="total-row"><td colspan="2">POIDS TOTAL</td><td class="num">${ui.num(prod.totalWeight, 2)} kg</td><td></td><td class="num">${ui.eur(prod.totalCost)}</td></tr></tfoot>
         </table>
       </div>
+      ${showDetail ? `<div class="tablewrap detail-table">
+        <table>
+          <thead><tr><th>Ingrédient</th><th>Unité</th>${thRec}<th class="num">Total</th></tr></thead>
+          <tbody>${detailRows || `<tr><td colspan="${recettes.length + 3}" class="muted center">Aucune quantité (saisis d'abord les stocks gibier).</td></tr>`}</tbody>
+          <tfoot><tr class="total-row"><td>POIDS TOTAL (kg)</td><td></td>${weightCells}<td class="num">${ui.num(prod.totalWeight, 2)}</td></tr></tfoot>
+        </table>
+      </div>` : ''}
     </div>
 
     <div class="card">
@@ -81,9 +112,13 @@ App.pages.production = function (view) {
     </div>
   `;
 
+  const goRecipes = view.querySelector('[data-go-recipes]');
+  if (goRecipes) goRecipes.onclick = () => App.router.go('/recettes');
+  view.querySelector('#toggleDetail').onclick = () => { view._showProdDetail = !view._showProdDetail; App.pages.production(view); };
+
   view.querySelectorAll('input[data-r]').forEach(inp => inp.oninput = () => {
     const rid = inp.dataset.r, fid = inp.dataset.f;
-    const v = parseInt(inp.value, 10);
+    const v = Math.round(ui.toNumber(inp.value));
     if (!db.bocaux) db.bocaux = {};
     if (!db.bocaux[rid]) db.bocaux[rid] = {};
     if (isNaN(v) || v === 0) delete db.bocaux[rid][fid];

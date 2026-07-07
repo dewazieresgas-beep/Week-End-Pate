@@ -82,7 +82,7 @@ App.pages.budget = function (view) {
       const d = db.depenses.find(x => x.id === tr.dataset.d);
       tr.querySelectorAll('[data-f]').forEach(inp => inp.oninput = () => {
         const f = inp.dataset.f;
-        d[f] = (f === 'montant') ? (parseFloat(inp.value) || 0) : inp.value;
+        d[f] = (f === 'montant') ? (ui.toNumber(inp.value) || 0) : inp.value;
         App.store.save();
         if (f === 'montant') refreshTotals();
       });
@@ -97,7 +97,7 @@ App.pages.budget = function (view) {
       const r = db.remboursements.find(x => x.id === tr.dataset.r);
       tr.querySelectorAll('[data-f]').forEach(inp => inp.oninput = () => {
         const f = inp.dataset.f;
-        r[f] = (f === 'montant') ? (parseFloat(inp.value) || 0) : inp.value;
+        r[f] = (f === 'montant') ? (ui.toNumber(inp.value) || 0) : inp.value;
         App.store.save();
         if (f === 'montant') recomputeAndRender();
       });
