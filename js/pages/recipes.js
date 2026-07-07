@@ -53,7 +53,7 @@ App.pages.recipes = function (view) {
         <td>${ui.esc(ing.nom)}</td>
         <td class="muted">${ui.esc(ing.unite)}</td>
         <td class="badge-cell">${ing.cat === 'Gibier' ? '<span class="badge badge-gibier">Gibier</span>' : '<span class="badge badge-achat">Achat</span>'}</td>
-        <td class="num editable"><input class="mini-input" type="number" min="0" step="0.001" inputmode="decimal"
+        <td class="num editable"><input class="mini-input" type="text" inputmode="decimal"
              data-dose="${ing.id}" value="${used ? val : ''}" placeholder="0"></td>
         <td class="right">${used ? `<button class="iconbtn" data-remove-dose="${ing.id}" title="Retirer de la recette">✕</button>` : ''}</td>
       </tr>`;
@@ -103,7 +103,7 @@ App.pages.recipes = function (view) {
 
           <div class="choice-add">
             <select id="ingAddSel" ${addIngredientOptions ? '' : 'disabled'}>${addIngredientOptions || '<option>Tous les ingrédients sont déjà utilisés</option>'}</select>
-            <input class="mini-input" id="ingAddDose" type="number" min="0" step="0.001" inputmode="decimal" placeholder="Dose">
+            <input class="mini-input" id="ingAddDose" type="text" inputmode="decimal" placeholder="Dose">
             <button class="btn btn-primary" id="ingAddBtn" ${addIngredientOptions ? '' : 'disabled'}>Ajouter</button>
           </div>
 

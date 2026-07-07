@@ -334,12 +334,12 @@ App.pages.years = function (view) {
         <div class="field"><label>Lieu</label><input id="f_lieu" value="${ui.esc(y.lieu || db.params.lieu || '')}"></div>
       </div>
       <div class="form-row">
-        <div class="field"><label>Kg produits</label><input id="f_totalKg" type="number" min="0" step="0.1" inputmode="decimal" value="${ui.esc(y.totalKg || '')}"></div>
+        <div class="field"><label>Kg produits</label><input id="f_totalKg" type="text" inputmode="decimal" value="${ui.esc(y.totalKg || '')}"></div>
         <div class="field"><label>Nombre de bocaux</label><input id="f_totalBocaux" type="number" min="0" step="1" value="${ui.esc(y.totalBocaux || '')}"></div>
       </div>
       <div class="form-row">
         <div class="field"><label>Participants</label><input id="f_participants" type="number" min="0" step="1" value="${ui.esc(y.participantsCount || y.nbParticipants || '')}"></div>
-        <div class="field"><label>Budget</label><input id="f_budget" type="number" min="0" step="0.01" inputmode="decimal" value="${ui.esc(y.budget || '')}"></div>
+        <div class="field"><label>Budget</label><input id="f_budget" type="text" inputmode="decimal" value="${ui.esc(y.budget || '')}"></div>
       </div>
       <div class="field"><label>Résumé court</label><input id="f_resume" value="${ui.esc(y.resume || '')}" placeholder="Ex. Belle journée, beaucoup de faisan"></div>
       <div class="field"><label>Notes</label><textarea id="f_notes" rows="3" placeholder="Anecdotes, organisation, remarques…">${ui.esc(y.notes || '')}</textarea></div>

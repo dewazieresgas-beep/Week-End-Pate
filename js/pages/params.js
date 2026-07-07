@@ -86,7 +86,7 @@ App.pages.params = function (view) {
   function gibier() {
     const rows = db.gibier.map(g => `<tr data-g="${g.id}">
       <td><input class="txt-input" data-f="nom" value="${ui.esc(g.nom)}"></td>
-      <td class="num"><input class="mini-input" type="number" min="0" max="1" step="0.01" data-f="rendement" value="${g.rendement}"></td>
+      <td class="num"><input class="mini-input" type="text" inputmode="decimal" data-f="rendement" value="${g.rendement}"></td>
       <td><button class="iconbtn" data-del="${g.id}">🗑</button></td>
     </tr>`).join('');
     box().innerHTML = `<div class="card">
@@ -121,7 +121,7 @@ App.pages.params = function (view) {
     const rows = db.ingredients.map(ing => `<tr data-i="${ing.id}">
       <td><input class="txt-input" data-f="nom" value="${ui.esc(ing.nom)}"></td>
       <td><input class="txt-input" style="width:70px;min-width:60px" data-f="unite" value="${ui.esc(ing.unite)}"></td>
-      <td class="num"><input class="mini-input" type="number" min="0" step="0.01" data-f="prix" value="${ing.prix}"></td>
+      <td class="num"><input class="mini-input" type="text" inputmode="decimal" data-f="prix" value="${ing.prix}"></td>
       <td><select class="txt-input" data-f="cat"><option ${ing.cat === 'Gibier' ? 'selected' : ''}>Gibier</option><option ${ing.cat === 'Achat' ? 'selected' : ''}>Achat</option></select></td>
       <td><button class="iconbtn" data-del="${ing.id}">🗑</button></td>
     </tr>`).join('');

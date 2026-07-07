@@ -15,7 +15,7 @@ App.pages.stocks = function (view) {
   const rows = db.gibier.map(g => {
     const cells = parts.map(p => {
       const v = (db.stocks[g.id] && db.stocks[g.id][p.id]) || '';
-      return `<td class="num editable"><input class="mini-input" type="number" min="0" step="0.01" inputmode="decimal"
+      return `<td class="num editable"><input class="mini-input" type="text" inputmode="decimal"
         data-g="${g.id}" data-p="${p.id}" value="${v}" placeholder="0"></td>`;
     }).join('');
     return `<tr data-g="${g.id}">

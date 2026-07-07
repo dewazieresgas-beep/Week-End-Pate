@@ -37,7 +37,7 @@ App.pages.contribute = function (view) {
       return `<tr data-g="${g.id}">
         <td>${ui.esc(g.nom)}</td>
         <td class="num muted">${ui.num(g.rendement * 100, 0)} %</td>
-        <td class="num editable"><input class="mini-input" type="number" min="0" step="0.01" inputmode="decimal"
+        <td class="num editable"><input class="mini-input" type="text" inputmode="decimal"
              data-g="${g.id}" value="${val}" placeholder="0"></td>
         <td class="num net">${net ? ui.num(net, 2) : '—'}</td>
         <td class="right">${val ? `<button class="iconbtn" data-clear="${g.id}" title="Effacer">✕</button>` : ''}</td>
@@ -66,7 +66,7 @@ App.pages.contribute = function (view) {
 
         <div class="choice-add">
           <select id="gibAddSel" ${addOptions ? '' : 'disabled'}>${addOptions || '<option>Tous les gibiers sont déjà saisis</option>'}</select>
-          <input class="mini-input" id="gibAddKg" type="number" min="0" step="0.01" inputmode="decimal" placeholder="kg">
+          <input class="mini-input" id="gibAddKg" type="text" inputmode="decimal" placeholder="kg">
           <button class="btn btn-primary" id="gibAddBtn" ${addOptions ? '' : 'disabled'}>Ajouter</button>
         </div>
 

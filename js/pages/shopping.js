@@ -29,7 +29,7 @@ App.pages.shopping = function (view) {
       <td>${ui.esc(ing.nom)}</td>
       <td class="muted">${ui.esc(ing.unite)}</td>
       <td class="num besoin">${ui.q(row.total)}</td>
-      <td class="num editable"><input class="mini-input" type="number" min="0" step="0.01" inputmode="decimal" data-stock="${ing.id}" value="${enStock}" placeholder="0"></td>
+      <td class="num editable"><input class="mini-input" type="text" inputmode="decimal" data-stock="${ing.id}" value="${enStock}" placeholder="0"></td>
       <td class="num acheter" data-i="${ing.id}">0</td>
       <td class="num muted">${ui.num(ing.prix, 2)}</td>
       <td class="num cout" data-i="${ing.id}">—</td>

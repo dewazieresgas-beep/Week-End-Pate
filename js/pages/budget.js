@@ -17,13 +17,13 @@ App.pages.budget = function (view) {
     const depRows = (db.depenses || []).map(d => `<tr data-d="${d.id}">
       <td><input class="txt-input" data-f="qui" value="${ui.esc(d.qui)}"></td>
       <td><input class="txt-input" data-f="poste" value="${ui.esc(d.poste)}"></td>
-      <td class="num"><input class="mini-input" type="number" step="0.01" data-f="montant" value="${d.montant}"></td>
+      <td class="num"><input class="mini-input" type="text" inputmode="decimal" data-f="montant" value="${d.montant}"></td>
       <td><button class="iconbtn" data-del-dep="${d.id}">🗑</button></td>
     </tr>`).join('');
 
     const rembRows = (db.remboursements || []).map(r => `<tr data-r="${r.id}">
       <td><input class="txt-input" data-f="qui" value="${ui.esc(r.qui)}"></td>
-      <td class="num"><input class="mini-input" type="number" step="0.01" data-f="montant" value="${r.montant}"></td>
+      <td class="num"><input class="mini-input" type="text" inputmode="decimal" data-f="montant" value="${r.montant}"></td>
       <td><input class="txt-input" data-f="a" value="${ui.esc(r.a)}"></td>
       <td><button class="iconbtn" data-del-remb="${r.id}">🗑</button></td>
     </tr>`).join('');
