@@ -45,6 +45,22 @@ App.store = (function () {
       if (db[k] === undefined) db[k] = def[k];
     }
     if (!db.meta) db.meta = def.meta;
+    mergeById(db.formats, def.formats);
+    if (!db.bocauxStock) db.bocauxStock = {};
+    def.formats.forEach(f => {
+      if (db.bocauxStock[f.id] === undefined) {
+        db.bocauxStock[f.id] = (def.bocauxStock && def.bocauxStock[f.id]) || 0;
+      }
+    });
+  }
+
+  function mergeById(target, defaults) {
+    if (!Array.isArray(target) || !Array.isArray(defaults)) return;
+    defaults.forEach(item => {
+      if (!target.some(x => x && x.id === item.id)) {
+        target.push(JSON.parse(JSON.stringify(item)));
+      }
+    });
   }
 
   function save() {

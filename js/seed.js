@@ -29,6 +29,8 @@ App.seed = (function () {
         { id: 'f315', nominalG: 350,  reelG: 315 },
         { id: 'f450', nominalG: 500,  reelG: 450 },
         { id: 'f675', nominalG: 750,  reelG: 675 },
+        { id: 'f900', nominalG: 1000, reelG: 900 },
+        { id: 'f1350', nominalG: 1500, reelG: 1350 },
       ],
       formatSuggere: 'f315', // format servant au « nombre de bocaux suggéré »
 
@@ -177,7 +179,7 @@ App.seed = (function () {
       courses: {},
 
       /* Bocaux vides en stock (onglet Liste de courses) */
-      bocauxStock: { f110:5, f180:54, f315:118, f450:21, f675:13 },
+      bocauxStock: { f110:5, f180:54, f315:118, f450:21, f675:13, f900:0, f1350:0 },
 
       /* Comptes réels de la journée (Budget & Comptes) */
       depenses: [
